@@ -1,0 +1,19 @@
+{
+    "name": "kpacha/travis-phpqa",
+    "description": "phpqatools for travis",
+    "keywords": ["phpqatools", "travis", "ci"],
+    "require": {
+        "php"                   : ">=5.3.3",
+        "h4cc/phpqatools"       : "*",
+        "symfony/console"       : "2.2.*",
+        "satooshi/php-coveralls": "dev-master"
+    },
+    "minimum-stability"         : "dev",
+    "autoload": {
+        "psr-0": {
+            "Kpacha\\Travis\\"  : "src/",
+            "Kpacha\\Tests\\"   : "tests/"
+        }
+    },
+    "bin": ["composer/bin/phpqa"]
+}
