@@ -23,57 +23,9 @@ if (!defined('TRAVIS_PHP_QA_TOOLS_COMPOSER_INSTALL')) {
     );
 }
 
-$vendorDir = realpath(dirname($file));
-$rootDir = realpath($vendorDir . '/..');
-$buildDir = $rootDir . '/build';
-$configDir = $buildDir . '/config';
-$logDir = $buildDir . '/logs';
-$binDir = $vendorDir . '/bin';
-$srcDir = $rootDir . '/src';
+$rootDir = realpath(dirname($file) . '/..');
 
-echo "Root : $rootDir\n";
-echo "Config : $configDir\n";
-echo "Logs : $logDir\n";
-echo "Binaries : $binDir\n";
+use Kpacha\Travis\QaTools\Application;
 
-$qaTools = array(
-    array('phpunit' => array('-c phpunit.xml.dist')),
-    array('phpmd' => array($srcDir, 'html', 'codesize', "--reportfile $buildDir/phpmd.html")),
-    array('phpmd' => array($srcDir, 'xml', 'codesize', "--reportfile $logDir/phpmd.xml")),
-    array('pdepend' => array(
-            "--jdepend-xml=$logDir/jdepend.xml",
-            "--jdepend-chart=$buildDir/dependencies.svg",
-            "--overview-pyramid=$buildDir/overview-pyramid.svg",
-            $srcDir
-    )),
-    array('phpcs' => array(
-            '--report=xml',
-            "--report-checkstyle=$logDir/checkstyle_checkstyle.xml",
-            "--report-xml=$logDir/checkstyle.xml",
-            "--report-full=$buildDir/checkstyle_full.log",
-            "--report-gitblame=$buildDir/checkstyle_gitblame.log",
-            "--report-source=$buildDir/checkstyle_source.log",
-            '--standard=PSR1,PSR2',
-            $srcDir
-    )),
-    array('security-checker' => array("security:check $rootDir/composer.lock")),
-);
-foreach ($qaTools as $qaTool) {
-    foreach ($qaTool as $tool => $options) {
-        $command = $binDir . '/' . $tool;
-        $options = implode(' ', (array) $options);
-        echo "\nRunning [$command $options].\n   - this could take a while...\n\n";
-        if (!file_exists($command)) {
-            die('Command [' . $command . '] not found!' . PHP_EOL);
-        }
-        $output = $executionResult = '';
-        exec("$command $options", $output, $executionResult);
-        if ($executionResult) {
-            echo "\nThe execution of the command [$command] fails!\n\n";
-            var_dump($executionResult);
-            var_dump($output);
-//            die;
-        } else
-            echo "DONE! \n" . implode("\n", $output);
-    }
-}
+$app = new Application($rootDir);
+$app->run();
