@@ -26,10 +26,12 @@ abstract class AbstractPlugin
     public function execute()
     {
         $command = $this->getShellCommand();
-        $options = $this->getArguments();
+        if($options = $this->getArguments()) {
+            $command .= ' ' . trim($options);
+        }
 
         $output = $executionResult = null;
-        exec("$command $options", $output, $executionResult);
+        exec($command, $output, $executionResult);
 
         return $this->checkResults($executionResult, $output);
     }

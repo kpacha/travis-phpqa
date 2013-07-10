@@ -2,4 +2,4 @@ src_dir: src # default: src
 bin_dir: vendor/bin # default: vendor/bin
 log_dir: build/logs # default: build/logs
 test_dir: tests # default: tests
-plugins: phpunit,phpmd,pdepend,phpcs,security-checker # default: phpunit
+plugins: phpunit,phpmd,pdepend,phpcs,security-checker,coveralls # default: phpunit
