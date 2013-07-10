@@ -5,23 +5,8 @@ namespace Kpacha\Travis\QaTools\Config;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
-/**
- * Definition of .coveralls.yml configuration.
- *
- * # same as ruby
- * repo_token: your-token
- * repo_secret_token: your-token
- * service_name: travis-pro
- *
- * # for php
- * src_dir: src
- * coverage_clover: build/logs/clover.xml
- * json_path: build/logs/coveralls-upload.json
- *
- */
 class QaToolsConfiguration implements ConfigurationInterface
 {
-    // ConfigurationInterface
 
     /**
      * {@inheritdoc}

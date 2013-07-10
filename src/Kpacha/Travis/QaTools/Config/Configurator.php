@@ -6,48 +6,40 @@ use Satooshi\Component\File\Path;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Yaml\Yaml;
 
-/**
- * Coveralls API configurator.
- *
- * @author Kitamura Satoshi <with.no.parachute@gmail.com>
- */
 class Configurator
 {
-    // API
 
     /**
      * Load configuration.
      *
-     * @param string $coverallsYmlPath Path to .coveralls.yml.
-     * @param string $rootDir          Path to project root directory.
+     * @param string $ymlPath Path to .phpqa.yml.
+     * @param string $rootDir Path to project root directory.
      *
      * @return \Kpacha\Travis\QaTools\Config\Configuration
      *
      * @throws \Symfony\Component\Yaml\Exception\ParseException If the YAML is not valid
      */
-    public function load($coverallsYmlPath, $rootDir)
+    public function load($ymlPath, $rootDir)
     {
-        $yml = $this->parse($coverallsYmlPath);
+        $yml = $this->parse($ymlPath);
         $options = $this->process($yml);
 
         return $this->createConfiguration($options, $rootDir);
     }
 
-    // Internal method
-
     /**
-     * Parse .coveralls.yml.
+     * Parse .phpqa.yml.
      *
-     * @param string $coverallsYmlPath Path to .coveralls.yml.
+     * @param string $ymlPath Path to .phpqa.yml.
      *
      * @return array
      *
      * @throws \Symfony\Component\Yaml\Exception\ParseException If the YAML is not valid
      */
-    protected function parse($coverallsYmlPath)
+    protected function parse($ymlPath)
     {
         $file = new Path();
-        $path = realpath($coverallsYmlPath);
+        $path = realpath($ymlPath);
 
         if ($file->isRealFileReadable($path)) {
             $yml = Yaml::parse($path);
@@ -73,7 +65,7 @@ class Configurator
     }
 
     /**
-     * Create coveralls configuration.
+     * Create the configuration instance.
      *
      * @param array  $options Processed configuration.
      * @param string $rootDir Path to project root directory.
