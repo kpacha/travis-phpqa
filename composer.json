@@ -15,5 +15,5 @@
             "Kpacha\\Tests\\"   : "tests/"
         }
     },
-    "bin": ["composer/bin/phpqa"]
+    "bin": ["bin/phpqa"]
 }
